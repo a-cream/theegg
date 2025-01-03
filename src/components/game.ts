@@ -1,3 +1,5 @@
+import { saveProducers, loadProducersSave } from './shop';
+
 class Game {
   private eggs: number; // Total eggs
   /* Earnings related */
@@ -6,6 +8,9 @@ class Game {
   constructor() {
     this.eggs = 0;
     this.epc = 1;
+
+    this.save = this.save.bind(this);
+    this.loadSave = this.loadSave.bind(this);
   }
 
   increment(): void {
@@ -21,7 +26,7 @@ class Game {
       i++;
     }
 
-    return num.toFixed(1) + ' ' + units[i];
+    return num.toFixed(0) + ' ' + units[i];
   }
 
   public setEggs(eggs: number): void {
@@ -30,6 +35,27 @@ class Game {
 
   public egg(): number {
     return this.eggs;
+  }
+
+  public save(): void {
+    const gameSave = {
+      eggs: this.eggs,
+      epc: this.epc
+    }
+
+    localStorage.setItem("main", JSON.stringify(gameSave));
+    saveProducers();
+  }
+
+  public loadSave(): void {
+    const jsonGameSave: string | null = localStorage.getItem("main");
+
+    if (jsonGameSave) {
+      const gameSave = JSON.parse(jsonGameSave);
+      this.eggs = gameSave.eggs;
+      this.epc = gameSave.epc;
+    }
+    loadProducersSave();
   }
 }
 

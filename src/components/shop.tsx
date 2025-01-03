@@ -3,6 +3,14 @@ import React, { useState, useEffect } from "react";
 
 import BorderImg from "../assets/wood.jpg";
 import AutoClickerImg from "../assets/shop/autoclicker.png";
+import ChickenImg from "../assets/shop/chicken.png";
+
+interface ProducerProps {
+  eps: number;
+  cost: number;
+  name: string;
+  img: string;
+}
 
 class ProducerBase {
   public name: string;
@@ -11,11 +19,11 @@ class ProducerBase {
   public cost: number;
   public img: string;
 
-  constructor(eps: number, cost: number, name: string, img: string) {
-    this.eps = eps;
-    this.cost = cost;
-    this.name = name;
-    this.img = img;
+  constructor(props: ProducerProps) {
+    this.eps = props.eps;
+    this.cost = props.cost;
+    this.name = props.name;
+    this.img = props.img;
     this.amount = 0;
     this.buy = this.buy.bind(this);
     this.start();
@@ -67,10 +75,10 @@ class ProducerBase {
               transform: "translateY(-50%)",
             }}
           ></img>
-          <div className="absolute right-2 top-4 font-poppins font-bold"
+          <div className="absolute right-2 font-poppins font-bold"
             style={{
               fontSize: "24px",
-              height: "100%",
+              top: "25%",
             }}>
             {amount}
           </div>
@@ -85,15 +93,55 @@ class ProducerBase {
 
 class AutoClicker extends ProducerBase {
   constructor() {
-    super(0.1, 10, "Autoclicker", AutoClickerImg);
+    super({ eps: 0.1, cost: 10, name: "Autoclicker", img: AutoClickerImg });
+  }
+}
+
+class Chicken extends ProducerBase {
+  constructor() {
+    super({ eps: 1, cost: 100, name: "Chicken", img: ChickenImg });
   }
 }
 
 const producers = [
   new AutoClicker(),
+  new Chicken(),
 ];
 
-const ProducersList: React.FC = () => {
+interface ProducerStructure {
+  name: string;
+  eps: number;
+  amount: number;
+  cost: number;
+  img: string;
+}
+
+export const saveProducers = (): void => {
+  const producersState = producers.map(producer => ({
+    name: producer.name,
+    eps: producer.eps,
+    amount: producer.amount,
+    cost: producer.cost,
+    img: producer.img,
+  }));
+  localStorage.setItem("producers", JSON.stringify(producersState));
+};
+
+export const loadProducersSave = (): void => {
+  const savedProducers = localStorage.getItem("producers");
+  if (savedProducers) {
+    const producersState = JSON.parse(savedProducers) as ProducerStructure[];
+    producersState.forEach((savedProducer) => {
+      const producer = producers.find(p => p.name === savedProducer.name);
+      if (producer) {
+        producer.amount = savedProducer.amount;
+        producer.cost = savedProducer.cost;
+      }
+    });
+  }
+};
+
+const ProducersList: React.FC = (): JSX.Element => {
   return (
     <div className="absolute right-0 top-0 w-80 h-screen" style={{
       borderImage: `url(${BorderImg}) 30 round`,

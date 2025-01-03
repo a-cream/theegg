@@ -24,6 +24,12 @@ const DisplayEggs: React.FC = () => {
 };
 
 export default function App(): JSX.Element {
+  game.loadSave();
+
+  setInterval(() => {
+    game.save();
+  }, 1000);
+
   return (
     <div>
       <DisplayEggs />
