@@ -1,7 +1,7 @@
 import { game } from "./game";
 import React, { useState, useEffect } from "react";
 
-import BorderImg from "../assets/wood.jpg";
+import BorderImg from "../assets/decoration/wood.jpg";
 import AutoClickerImg from "../assets/shop/autoclicker.png";
 import ChickenImg from "../assets/shop/chicken.png";
 
@@ -43,26 +43,31 @@ class ProducerBase {
       this.amount++;
       this.cost = Math.ceil(this.cost * 1.2);
     }
+
+    game.eps = totalEps();
   }
 
   render(): JSX.Element {
     const Update: React.FC = () => {
       const [amount, setAmount] = useState(this.amount);
-      const [cost, setCost] = useState(game.formatNumber(this.cost));
+      const [cost, setCost] = useState(game.formatNumber(this.cost, false));
+
+      const [isclicked, setIsclicked] = useState(false);
 
       useEffect(() => {
-        const interval = setInterval(() => { setCost(game.formatNumber(this.cost)); setAmount(this.amount); }, 100);
+        const interval = setInterval(() => { setCost(game.formatNumber(this.cost, false)); setAmount(this.amount); }, 100);
         return () => clearInterval(interval);
       }, [])
 
       return (
-        <div onClick={this.buy} style={{
-          cursor: "pointer",
-          userSelect: "none",
-          height: "60px",
-          border: "1px solid",
-          position: "relative",
-        }}>
+        <div onClick={this.buy} onMouseDown={() => setIsclicked(true)} onMouseUp={() => setIsclicked(false)}
+          style={{
+            cursor: "pointer",
+            userSelect: "none",
+            height: "60px",
+            border: isclicked ? "inset 5px rgb(222,222,222)" : "outset 5px rgb(222,222,222)",
+            position: "relative",
+          }}>
           <img
             src={this.img}
             alt={this.name + " image"}
@@ -140,6 +145,14 @@ export const loadProducersSave = (): void => {
     });
   }
 };
+
+export const totalEps = (): number => {
+  let total = 0;
+  producers.forEach(producer => {
+    total += producer.eps * producer.amount;
+  });
+  return total;
+}
 
 const ProducersList: React.FC = (): JSX.Element => {
   return (

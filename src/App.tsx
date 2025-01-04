@@ -6,20 +6,27 @@ import ProducersList from "./components/shop"
 const egg = new Egg({ height: 400, width: 400 });
 
 const DisplayEggs: React.FC = () => {
-  const [eggs, setEggs] = useState(game.formatNumber(game.egg()));
+  const [eggs, setEggs] = useState(game.formatNumber(game.egg(), false));
+  const [eps, setEps] = useState(game.formatNumber(game.eps, true));
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setEggs(game.formatNumber(game.egg()));
+      setEggs(game.formatNumber(game.egg(), false));
+      setEps(game.formatNumber(game.eps, true));
     }, 100);
 
     return () => clearInterval(interval); // Cleanup the interval on unmount
   }, []); // The empty array means this effect runs once after the first render
 
   return (
-    <div 
-      className="font-poppins text-3xl font-bold text-center mt-4"
-    >{eggs} Eggs</div>
+    <div>
+      <div className="font-poppins text-3xl font-bold text-center mt-4">
+        {eggs} Eggs
+      </div>
+      <div className="font-poppins text-2xl font-bold text-center">
+        {eps} Eps
+      </div>
+    </div>
   );
 };
 

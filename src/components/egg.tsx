@@ -22,10 +22,10 @@ export class Egg extends Component<EggProps> {
     indicator.id = uniqueId;
     indicator.style.userSelect = 'none';
     indicator.style.fontFamily = 'Poppins';
-    indicator.innerText = '+' + game.epc;
+    indicator.innerText = '+' + game.formatNumber(game.epc, false);
     indicator.style.position = 'absolute';
     indicator.style.left = `${event.clientX-random}px`;
-    indicator.style.top = `${event.clientY-20}px`;
+    indicator.style.top = `${event.clientY-30}px`;
     indicator.style.fontSize = '20px';
     indicator.style.color = 'black';
     indicator.style.opacity = '1';
