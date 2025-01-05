@@ -1,19 +1,88 @@
 import Img from '../assets/egg.png';
 import { game } from './game';
-import { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 
-interface EggProps {
+interface DimensionProps {
   height: number;
   width: number;
 }
 
-export class Egg extends Component<EggProps> {
-  constructor(props: EggProps) {
+interface CanvasProps extends DimensionProps {
+  onclick: (e: MouseEvent) => void
+}
+
+const Canvas: React.FC<CanvasProps> = (props: CanvasProps): JSX.Element => {
+  const canvasRef = React.useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        const img = new Image();
+        img.src = Img;
+        img.onload = () => {
+          const aspectRatio = img.width / img.height;
+          let drawWidth = props.width;
+          let drawHeight = props.height;
+
+          if (props.width / props.height > aspectRatio) {
+            drawWidth = props.height * aspectRatio;
+          } else {
+            drawHeight = props.width / aspectRatio;
+          }
+
+          ctx.drawImage(img, 0, canvas.height / 4, drawWidth, drawHeight);
+        };
+      }
+    }
+  }, [props.height, props.width]);
+
+  const handleMouseMove = (event: React.MouseEvent<HTMLCanvasElement>) => {
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        const rect = canvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+
+        const pixel = ctx.getImageData(x, y, 1, 1).data;
+
+        if (pixel[3] !== 0) {
+          canvas.style.cursor = "pointer";
+          canvas.onclick = props.onclick;
+          canvas.style.transform = "scale(1.1)";
+          canvas.style.transition = "transform 0.3s ease";
+        } else {
+          canvas.style.cursor = "auto";
+          canvas.onclick = null;
+          canvas.style.transform = "scale(1)";
+
+        }
+      }
+    }
+  }
+
+  return (
+    <canvas 
+      ref={canvasRef} 
+      height={props.height} 
+      width={props.width} 
+      onMouseMove={handleMouseMove}
+      style={{ transition: "transform 0.3s ease", }}
+    ></canvas>
+  );
+}
+
+
+export class Egg extends Component<DimensionProps> {
+  constructor(props: DimensionProps) {
     super(props);
     this.onClick = this.onClick.bind(this) as (event: MouseEvent) => void;
   }
 
-  public onClick(event: MouseEvent): void {
+  private onClick(event: MouseEvent): void {
     game.increment();
 
     const random: number = Math.floor(Math.random() * 20);
@@ -24,8 +93,8 @@ export class Egg extends Component<EggProps> {
     indicator.style.fontFamily = 'Poppins';
     indicator.innerText = '+' + game.formatNumber(game.epc, false);
     indicator.style.position = 'absolute';
-    indicator.style.left = `${event.clientX-random}px`;
-    indicator.style.top = `${event.clientY-30}px`;
+    indicator.style.left = `${event.clientX - random}px`;
+    indicator.style.top = `${event.clientY - 30}px`;
     indicator.style.fontSize = '20px';
     indicator.style.color = 'black';
     indicator.style.opacity = '1';
@@ -47,32 +116,10 @@ export class Egg extends Component<EggProps> {
   }
 
   public render(): JSX.Element {
-    const handleMouseEnter = (e: React.MouseEvent<HTMLImageElement>) => {
-      const img = e.currentTarget;
-      img.style.transform = "scale(1.1)";
-      img.style.transition = "transform 0.3s ease";
-    };
-
-    const handleMouseLeave = (e: React.MouseEvent<HTMLImageElement>) => {
-      const img = e.currentTarget;
-      img.style.transform = "scale(1)";
-    };
-
     const { height, width } = this.props;
     return (
       <div className="grid place-items-center h-screen">
-        <img
-          src={Img}
-          height={height}
-          width={width}
-          onClick={(e) => this.onClick(e.nativeEvent)}
-          style={{
-            cursor: 'pointer',
-            transition: "transform 0.3s ease",
-          }}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-        ></img>
+        <Canvas height={height} width={width} onclick={this.onClick} />
       </div>
     )
   }

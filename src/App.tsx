@@ -3,9 +3,7 @@ import { game } from "./components/game"
 import React, { useState, useEffect } from "react"
 import ProducersList from "./components/shop"
 
-const egg = new Egg({ height: 400, width: 400 });
-
-const DisplayEggs: React.FC = () => {
+const EggInfo: React.FC = (): JSX.Element => {
   const [eggs, setEggs] = useState(game.formatNumber(game.egg(), false));
   const [eps, setEps] = useState(game.formatNumber(game.eps, true));
 
@@ -39,8 +37,8 @@ export default function App(): JSX.Element {
 
   return (
     <div>
-      <DisplayEggs />
-      {egg.render()}
+      <EggInfo />
+      <Egg height={400} width={400} />
       <ProducersList />
     </div>
   )
