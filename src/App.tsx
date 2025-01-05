@@ -18,10 +18,10 @@ const EggInfo: React.FC = (): JSX.Element => {
 
   return (
     <div>
-      <div className="font-poppins text-3xl font-bold text-center mt-4">
+      <div className="font-poppins text-3xl font-bold text-center mt-4 select-none">
         {eggs} Eggs
       </div>
-      <div className="font-poppins text-2xl font-bold text-center">
+      <div className="font-poppins text-2xl font-bold text-center select-none">
         {eps} Eps
       </div>
     </div>
