@@ -1,7 +1,8 @@
-import { Egg } from "./components/egg"
-import { game } from "./components/game"
-import React, { useState, useEffect } from "react"
-import ProducersList from "./components/shop"
+import { Egg } from "./components/egg";
+import { game } from "./components/game";
+import React, { useState, useEffect } from "react";
+import ProducersList from "./components/shop";
+import BackgroundImg from "./assets/decoration/background.png";
 
 const EggInfo: React.FC = (): JSX.Element => {
   const [eggs, setEggs] = useState(game.formatNumber(game.egg(), false));
@@ -18,10 +19,10 @@ const EggInfo: React.FC = (): JSX.Element => {
 
   return (
     <div>
-      <div className="font-poppins text-3xl font-bold text-center mt-4 select-none">
+      <div className="font-poppins text-3xl font-bold text-center mt-4 select-none text-white">
         {eggs} Eggs
       </div>
-      <div className="font-poppins text-2xl font-bold text-center select-none">
+      <div className="font-poppins text-2xl font-bold text-center select-none text-white">
         {eps} Eps
       </div>
     </div>
@@ -34,6 +35,10 @@ export default function App(): JSX.Element {
   setInterval(() => {
     game.save();
   }, 1000);
+
+  document.body.style.backgroundImage = `url(${BackgroundImg})`;
+  document.body.style.backgroundSize = "45%";
+  document.body.style.backgroundRepeat = "repeat";
 
   return (
     <div>

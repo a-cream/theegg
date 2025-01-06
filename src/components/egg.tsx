@@ -96,7 +96,7 @@ export class Egg extends Component<DimensionProps> {
     indicator.style.left = `${event.clientX - random}px`;
     indicator.style.top = `${event.clientY - 30}px`;
     indicator.style.fontSize = '20px';
-    indicator.style.color = 'black';
+    indicator.style.color = 'white';
     indicator.style.opacity = '1';
     indicator.style.transition = 'all 1s ease-out';
 
@@ -118,7 +118,7 @@ export class Egg extends Component<DimensionProps> {
   public render(): JSX.Element {
     const { height, width } = this.props;
     return (
-      <div className="grid place-items-center h-screen">
+      <div className="grid place-items-center h-screen pb-20">
         <Canvas height={height} width={width} onclick={this.onClick} />
       </div>
     )

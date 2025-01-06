@@ -66,6 +66,7 @@ class ProducerBase {
             userSelect: "none",
             height: "60px",
             border: isclicked ? "inset 5px rgb(222,222,222)" : "outset 5px rgb(222,222,222)",
+            backgroundColor: "white",
             position: "relative",
           }}>
           <img
@@ -157,8 +158,9 @@ export const totalEps = (): number => {
 const ProducersList: React.FC = (): JSX.Element => {
   return (
     <div className="absolute right-0 top-0 w-80 h-screen" style={{
-      borderImage: `url(${BorderImg}) 30 round`,
+      borderImage: `url(${BorderImg}) 50 round`,
       borderLeft: "10px solid",
+      backgroundColor: "rgba(0,0,0,0.222)",
     }}>
       {producers.map((producer, index) => (
         <div key={index}>{producer.render()}</div>
