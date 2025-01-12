@@ -1,8 +1,9 @@
 import { Egg } from "./components/egg";
 import { game } from "./components/game";
-import React, { useState, useEffect } from "react";
+import Extra from "./components/extra";
 import ProducersList from "./components/shop";
 import BackgroundImg from "./assets/decoration/background.png";
+import React, { useState, useEffect } from "react";
 
 const EggInfo: React.FC = (): JSX.Element => {
   const [eggs, setEggs] = useState(game.formatNumber(game.egg(), false));
@@ -42,6 +43,7 @@ export default function App(): JSX.Element {
 
   return (
     <div>
+      <Extra name="Gello"/>
       <EggInfo />
       <Egg height={400} width={400} />
       <ProducersList />

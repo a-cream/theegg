@@ -118,7 +118,7 @@ export class Egg extends Component<DimensionProps> {
   public render(): JSX.Element {
     const { height, width } = this.props;
     return (
-      <div className="grid place-items-center h-screen pb-20">
+      <div className="grid place-items-center h-screen pb-52">
         <Canvas height={height} width={width} onclick={this.onClick} />
       </div>
     )
