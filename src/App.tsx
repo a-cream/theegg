@@ -43,7 +43,7 @@ export default function App(): JSX.Element {
 
   return (
     <div>
-      <Extra name="Gello"/>
+      <Extra name={game.name}/>
       <EggInfo />
       <Egg height={400} width={400} />
       <ProducersList />

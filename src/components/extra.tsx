@@ -1,6 +1,7 @@
 import { Component } from "react";
 import SignImg from "../assets/decoration/sign.png";
 import BorderImg from "../assets/decoration/wood.jpg";
+import { game } from "./game";
 
 interface ExtraProps {
   name: string
@@ -41,8 +42,9 @@ export default class Extra extends Component<ExtraProps> {
           width: "220px",
           wordBreak: "break-word"
         }}>
-          <p contentEditable="true" onBeforeInput={(e) => {
+          <p contentEditable="true" spellCheck="false" onInput={(e) => {
             if (e.currentTarget.textContent) {
+              game.name = e.currentTarget.textContent;
               if (e.currentTarget.textContent.length >= 20) {
                 e.preventDefault();
               }
@@ -55,7 +57,8 @@ export default class Extra extends Component<ExtraProps> {
             left: "50%",
             transform: "translate(-50%,-50%)",
             fontSize: "1rem",
-            color: "transparent",
+            fontWeight: "bold",
+            color: "whitesmoke",
             textAlign: "center",
             textShadow: "0.5px 0.5px 2px rgba(0,0,0,0.5), -0.5px -0.5px 2px rgba(0,0,0,0.5)",
             outline: "none",

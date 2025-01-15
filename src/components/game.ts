@@ -6,10 +6,14 @@ class Game {
   public epc: number; // Eggs per click
   public eps: number; // Eggs per second
 
+  /* Extra */
+  public name: string;
+
   constructor() {
     this.eggs = 0;
     this.epc = 1;
     this.eps = 0;
+    this.name = "Example";
 
     this.save = this.save.bind(this);
     this.loadSave = this.loadSave.bind(this);
@@ -42,7 +46,8 @@ class Game {
   public save(): void {
     const gameSave = {
       eggs: this.eggs,
-      epc: this.epc
+      epc: this.epc,
+      name: this.name
     }
 
     localStorage.setItem("main", JSON.stringify(gameSave));
@@ -56,6 +61,7 @@ class Game {
       const gameSave = JSON.parse(jsonGameSave);
       this.eggs = gameSave.eggs;
       this.epc = gameSave.epc;
+      this.name = gameSave.name;
     }
     loadProducersSave();
     this.eps = totalEps();
