@@ -14,7 +14,7 @@ export default class Extra extends Component<ExtraProps> {
 
   private Name(): JSX.Element {
     const { name } = this.props;
-    const borderWidth = 10;
+    const borderWidth: number = 10;
 
     return (
       <div style={{
@@ -27,12 +27,13 @@ export default class Extra extends Component<ExtraProps> {
         borderLeft: `${borderWidth}px solid`,
         borderBottom: `${borderWidth}px solid`,
       }}>
-        <img src={SignImg} height="250" width="250" style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%,-50%)",
-        }}></img>
+        <img src={SignImg} height="250" width="250"
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%,-50%)",
+          }}></img>
         <div style={{
           position: "absolute",
           top: "50%",
@@ -42,28 +43,43 @@ export default class Extra extends Component<ExtraProps> {
           width: "220px",
           wordBreak: "break-word"
         }}>
-          <p contentEditable="true" spellCheck="false" onInput={(e) => {
-            if (e.currentTarget.textContent) {
-              game.name = e.currentTarget.textContent;
-              if (e.currentTarget.textContent.length >= 20) {
-                e.preventDefault();
+          <p contentEditable="true" spellCheck="false" suppressContentEditableWarning={true}
+            onBeforeInput={(e) => {
+              if (e.currentTarget.textContent) {
+                if (e.currentTarget.textContent.length >= 20) {
+                  e.preventDefault();
+                }
+              } else {
+                throw new Error("e.currentTarget.textContent is null");
               }
-            } else {
-              throw new Error("e.currentTarget.textContent is null");
-            }
-          }} style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%,-50%)",
-            fontSize: "1rem",
-            fontWeight: "bold",
-            color: "whitesmoke",
-            textAlign: "center",
-            textShadow: "0.5px 0.5px 2px rgba(0,0,0,0.5), -0.5px -0.5px 2px rgba(0,0,0,0.5)",
-            outline: "none",
-            userSelect: "none",
-          }}>{name}</p>
+            }}
+            onInput={(e) => {
+              if (e.currentTarget.textContent) {
+                game.name = e.currentTarget.textContent;
+                if (e.currentTarget.textContent.length <= 1) {
+                  e.currentTarget.style.width = "100px";
+                  e.currentTarget.style.height = "20px";
+                } else {
+                  e.currentTarget.style.width = "";
+                  e.currentTarget.style.height = "";
+                }
+              }
+            }}
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%,-50%)",
+              fontSize: "1rem",
+              fontWeight: "bold",
+              color: "whitesmoke",
+              textAlign: "center",
+              textShadow: "0.5px 0.5px 2px rgba(0,0,0,0.5), -0.5px -0.5px 2px rgba(0,0,0,0.5)",
+              outline: "none",
+              userSelect: "none",
+            }}>
+            {name.length <= 1 ? "You can type here" : name}
+          </p>
         </div>
       </div>
     )
