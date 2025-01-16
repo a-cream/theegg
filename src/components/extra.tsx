@@ -12,7 +12,7 @@ export default class Extra extends Component<ExtraProps> {
     super(props)
   }
 
-  private Name(): JSX.Element {
+  render() {
     const { name } = this.props;
     const borderWidth: number = 10;
 
@@ -83,12 +83,6 @@ export default class Extra extends Component<ExtraProps> {
         </div>
       </div>
     )
-  }
-
-  render() {
-    const Name = this.Name.bind(this);
-    return (
-      <Name />
-    )
+  
   }
 }
