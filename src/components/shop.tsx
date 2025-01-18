@@ -4,16 +4,6 @@ import Autoclicker from "../assets/shop/autoclicker.png";
 import Chicken from "../assets/shop/chicken.png";
 import Border from "../assets/decoration/wood.jpg";
 
-const originalWarn = console.warn;
-
-console.warn = function(message, ...optionalParams) {
-  if (message === "Cannot mutate a Store directly") {
-    return;
-  }
-
-  originalWarn.apply(console, [message, ...optionalParams]);
-};
-
 export interface ProducerBaseProps {
   name: string,
   img: string,
