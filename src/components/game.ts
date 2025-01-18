@@ -41,11 +41,11 @@ const loadSave = (): void => {
 
   if (gameSave) {
     const parsedSave: Record<any, number & string> = JSON.parse(gameSave);
-    setGame("name", e => e = parsedSave.name);
-    setGame("eggs", e => e = parsedSave.eggs);
-    setGame("eps", e => e = parsedSave.eps);
-    setGame("epc", e => e = parsedSave.epc);
-    setGame("producers", e => e = parsedSave.producers || []);
+    setGame("name", () => parsedSave.name);
+    setGame("eggs", () => parsedSave.eggs);
+    setGame("eps", () => parsedSave.eps);
+    setGame("epc", () => parsedSave.epc);
+    setGame("producers", () => parsedSave.producers || []);
   }
 }
 

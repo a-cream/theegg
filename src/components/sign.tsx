@@ -1,8 +1,7 @@
 import { game, setGame } from "./game";
 
-// Ensure game.name is initialized
 if (!game.name) {
-  setGame("name", e => e = "Nothing");
+  setGame("name", () => "Your name");
 }
 
 import SignImg from "../assets/decoration/sign.png";
@@ -54,7 +53,7 @@ export const Sign = () => {
               const startOffset = range?.startOffset || 0;
               const endOffset = range?.endOffset || 0;
 
-              setGame("name", v => v = content);
+              setGame("name", () => content);
 
               if (e.currentTarget.textContent.length <= 1) {
                 e.currentTarget.style.width = "100px";
