@@ -54,11 +54,11 @@ setInterval(() => {
   for (let i = 0; i < game.producers.length; i++) {
     result += game.producers[i].eps * game.producers[i].amount;
   }
-  setGame("eps", e => e = result);
+  setGame("eps", () => result);
 }, 100)
 
 setInterval(() => {
-  setGame("eggs", e => e += game.eps / 10);
+  setGame("eggs", eggs => eggs += game.eps / 10);
 }, 100)
 
 const initialState: Game = {
