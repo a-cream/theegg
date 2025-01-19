@@ -16,7 +16,7 @@ const format = (num: number, decimal: boolean): string => {
   const units = ["", "million", "billion", "trillion", "quadrillion", "quintillion"];
 
   if (num < 1_000_000) {
-    return Math.ceil(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    return decimal ? num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") : Math.ceil(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   }
 
   let i = 0;
