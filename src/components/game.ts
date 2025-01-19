@@ -13,7 +13,11 @@ type Game = {
 }
 
 const format = (num: number, decimal: boolean): string => {
-  const units = ["", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion"];
+  const units = ["", "million", "billion", "trillion", "quadrillion", "quintillion"];
+
+  if (num < 1_000_000) {
+    return Math.ceil(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  }
 
   let i = 0;
   while (num >= 1000 && i < units.length - 1) {
@@ -21,7 +25,7 @@ const format = (num: number, decimal: boolean): string => {
     i++;
   }
 
-  return decimal ? num.toFixed(1) + ' ' + units[i] : num.toFixed(0) + ' ' + units[i];
+  return decimal ? num.toFixed(1).replace(/\B(?=(\d{3})+(?!\d))/g, " ") + ' ' + units[i] : num.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, " ") + ' ' + units[i];
 }
 
 const save = (): void => {

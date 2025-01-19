@@ -77,6 +77,7 @@ export const Egg = (props: EggProps) => {
         canvas.style.cursor = "pointer";
         canvas.style.transform = "scale(1.1)";
         canvas.style.transition = "transform 0.3s ease";
+        canvas.onclick = handleOnClick;
       } else {
         canvas.style.cursor = "auto";
         canvas.onclick = null;
@@ -87,7 +88,7 @@ export const Egg = (props: EggProps) => {
 
   return (
     <div class="grid place-items-center h-screen pb-52">
-      <canvas onClick={handleOnClick} onMouseMove={handleMouseMove} ref={ref => canvas = ref} height={props.height} width={props.width}></canvas>
+      <canvas onMouseMove={handleMouseMove} ref={ref => canvas = ref} height={props.height} width={props.width}></canvas>
     </div>
   );
 }
